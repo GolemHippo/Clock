@@ -2,6 +2,44 @@
 import time
 
 
+# Function that initiate Time Tuple
+def settime():
+    while True:
+        try:
+            global hours, minutes, seconds
+            hours = int(input('To edit time you will need to enter hours, minutes and seconds\nHours :'))
+            minutes = int(input('Minutes'))
+            seconds = int(input('Seconds'))
+            return
+        except ValueError:
+            print("Please enter a valid time")
+        
+        
+#Function that act as a clock        
+def clockrunning():
+    global hours, minutes, seconds
+    seconds += 1
+    if seconds >= 60:
+        seconds = 0
+        minutes += 1
+
+    if minutes >= 60:
+        minutes = 0
+        hours += 1
+
+    if hours >= 24:
+        hours = 0
+
+#Function that displays set time
+def displayclock():
+    while True:
+        clockrunning()
+        time.sleep(1)
+        timeis = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
+        print(timeis)
+
+
+
 
 # Function that displays local time
 def localtime():
@@ -69,6 +107,10 @@ def main():
         if menu == 1:  # Show local time
             localtime()
 
+        if menu == 2:  #Set time
+            settime()
+            displayclock()
+            
         if menu == 3:  # Set an alarm
             alarm()
 # Version 12h
@@ -95,3 +137,10 @@ if format == 'A':
 if format == 'B':
     print("You use the 12h format")
     main_12h()
+
+
+
+
+
+
+
