@@ -102,7 +102,6 @@ def main_12h():
             localtime2()
             
         if menu2 == 2:  #Set time
-            settime()
             displayclock2()
             
         if menu2 == 3:  # Set an alarm
@@ -126,6 +125,10 @@ def localtime2():
 #Function Clock V12H
 def clockrunning2():
     global hours, minutes, seconds, afternoon
+    hours = int(input('To edit the time,\nPlease enter the Hours :'))
+    minutes = int(input('Please enter the minutes :'))
+    seconds = int(input('Please enter the seconds :'))
+    afternoon = str(input('Please enter the meridium (AM/PM)'))
     seconds += 1
     if seconds >= 60:
         seconds = 0
