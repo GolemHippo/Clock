@@ -6,3 +6,4 @@ while True:
     seconds = time.strftime('%S')
     print(hours,':',minutes,':',seconds)
     time.sleep(1)
+    
