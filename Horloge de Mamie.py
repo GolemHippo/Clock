@@ -11,7 +11,6 @@ def main():
             localtime()
 
         if menu == 2:  #Set time
-            settime()
             displayclock()
             
         if menu == 3:  # Set an alarm
