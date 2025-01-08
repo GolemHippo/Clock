@@ -2,4 +2,4 @@
 
 Problématiques sur le réglage de l'heure et de l'alarme
 
---
+Clock and alarm working but without validation and pause of running code 
