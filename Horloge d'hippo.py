@@ -131,12 +131,11 @@ def alarm_customtime():
     print(f"Alarm set at {str(alarm_hours).zfill(2)}:{str(alarm_minutes).zfill(2)}:{str(alarm_seconds).zfill(2)}")
     hours, minutes, seconds = 10, 30, 20
     while True:
+        show_time()
         if hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds:
-            show_time()
+            
             print("\nDING DING !!!")
             break
-        else:
-            show_time()
             
 def alarm_customtime12h():
     print()
@@ -156,13 +155,10 @@ def alarm_customtime12h():
         meridiem = 'AM'
         m_hours = hours
     while True:
+        show_time12h()
         if m_hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds and meridiem == alarm_meridiem:
-            show_time12h()
             print("\nDING DING !!!")
             break
-        else:
-            show_time12h()
-
 
 # Menu
 def main():
@@ -195,7 +191,7 @@ def main():
             print()
             print("GoodBye !")
             print()
-            break
+            exit()
         else:
             print()
             print("Error, retry...")
@@ -230,7 +226,7 @@ def main_12h():
             print()
             print("GoodBye !")
             print()
-            break
+            exit()
         else:
             print()
             print("Error, retry...")
