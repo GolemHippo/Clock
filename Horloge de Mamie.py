@@ -1,49 +1,53 @@
 # Importing the library
 import time
+import keyboard
+
+# Function Clock Running
+def running():
+    global hours, minutes, seconds
+    timeis = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
+    print(f"\r{timeis}", end="")
+    time.sleep(1)
+    seconds += 1
+    if seconds == 60:
+        seconds = 0
+        minutes += 1
+    if minutes == 60:
+        minutes = 0
+        hours += 1
+    if hours == 24:
+        hours = 0
         
-# Function Show Local Time (fixed)
+# Function Show LocalTime
 def localtime():
     print()
-    print("Local Time")
+    print("Local Time\nKeep press escape to stop")
     global hours, minutes, seconds
-    hours = 00
-    minutes = 00
+    hours = 2
+    minutes = 20
     seconds = 00
     while True:
-        timeis = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
-        print(f"\r{timeis}", end="")
-        time.sleep(1)
-        seconds += 1
-        if seconds == 60:
-            seconds = 0
-            minutes += 1
-        if minutes == 60:
-            minutes = 0
-            hours += 1
-        if hours == 24:
-            hours = 0
+        running()
+        keyboard.is_pressed('esc')
+        if keyboard.is_pressed('esc') == True:
+            print()
+            break
+
         
-# Function Show Custom Clock (fixed)
+# Function DisplayClock
 def afficher_heure():
     print()
-    print("Time set at 10:30:20")
+    print("Time set at 10:30:20\nKeep press escape to stop")
     global hours, minutes, seconds
     hours = 10
     minutes = 30
     seconds = 20
     while True:
-        timeis = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
-        print(f"\r{timeis}", end="")
-        time.sleep(1)
-        seconds += 1
-        if seconds == 60:
-            seconds = 0
-            minutes += 1
-        if minutes == 60:
-            minutes = 0
-            hours += 1
-        if hours == 24:
-            hours = 0
+        running()
+        keyboard.is_pressed('esc')
+        if keyboard.is_pressed('esc') == True:
+            print()
+            break
 
 # Function Alarm Set Local Time
 def alarm_localtime():
@@ -54,26 +58,19 @@ def alarm_localtime():
     alarm_seconds = int(input("Enter a second (00-59) : "))
     print()
     print(f"Alarm set at {str(alarm_hours).zfill(2)}:{str(alarm_minutes).zfill(2)}:{str(alarm_seconds).zfill(2)}")
-    hours, minutes, seconds = 0, 0, 0 
+    print("Keep press escape to stop")
+    hours, minutes, seconds = 2, 20, 0 
     while True:
-        seconds += 1
-        if seconds == 60:
-            seconds = 0
-            minutes += 1
-        if minutes == 60:
-            minutes = 0
-            hours += 1
-        if hours == 24:
-            hours = 0
-        timeis = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
-        print(f"\r{timeis}", end="")
-        time.sleep(1)
+        running()
         if hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds:
             print()
             print("\nDING DING !!!")
+        keyboard.is_pressed('esc')
+        if keyboard.is_pressed('esc') == True:
+            print()
             break
 
-# Function Alarm Set Custom Clock
+# Function Alarm Set Display Time
 def alarm_customtime():
     print()
     global hours, minutes, seconds
@@ -82,27 +79,20 @@ def alarm_customtime():
     alarm_seconds = int(input("Enter a second (00-59) : "))
     print()
     print(f"Alarm set at {str(alarm_hours).zfill(2)}:{str(alarm_minutes).zfill(2)}:{str(alarm_seconds).zfill(2)}")
+    print("Keep press escape to stop")
     hours, minutes, seconds = 10, 30, 20
     while True:
-        seconds += 1
-        if seconds == 60:
-            seconds = 0
-            minutes += 1
-        if minutes == 60:
-            minutes = 0
-            hours += 1
-        if hours == 24:
-            hours = 0
-        timeis = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
-        print(f"\r{timeis}", end="")
-        time.sleep(1)
+        running()
         if hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds:
             print()
             print("\nDING DING !!!")
+        keyboard.is_pressed('esc')
+        if keyboard.is_pressed('esc') == True:
+            print()
             break
 
 
-# Menu
+# MAIN
 def main():
     while True:
         print("\n---- MENU ----")
