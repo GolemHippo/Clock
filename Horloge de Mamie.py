@@ -2,17 +2,19 @@
 import time
 import keyboard
 
-
+# Function to get Real Local Time
 def get_localtime():
     global hours, minutes, seconds
     hours = int(time.strftime('%H'))
     minutes = int(time.strftime('%M'))
     seconds = int(time.strftime('%S'))
     
+# Function Pause Prank
 def time_prank():
-    if (hours + minutes + seconds)%7 == 0:
-        time.sleep(7) 
+    if (hours + minutes + seconds)%13 == 0:
+        time.sleep(3) 
 
+# Function Clock Running
 def time_running():
     global seconds, minutes, hours
     seconds += 1
@@ -27,13 +29,14 @@ def time_running():
     time.sleep(1)
     time_prank()
 
+# Function Show Real Local Time
 def show_time():
     global seconds, hours, minutes
     timeis = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
     print(f"\r{timeis}", end="")
     time_running()
 
-
+# Function Show Real Local Time 12h format
 def show_time12h():
     global hours, minutes, seconds, meridiem
     if hours == 12:
@@ -48,7 +51,7 @@ def show_time12h():
     print(f"\r{timeis}", end="")
     time_running()
 
-# Function Show Local Time (fixed)
+# Function Local Time
 def localtime():
     print()
     print("Local Time Hold 'escape' to return to menu")
@@ -59,6 +62,7 @@ def localtime():
             print()
             break
 
+# Function Local Time 12h format
 def localtime12h():
     print()
     print("Local Time \nHold 'escape' to return to menu")
@@ -69,7 +73,7 @@ def localtime12h():
             print()
             break
         
-# Function Show Custom Clock (fixed)
+# Function Custom Clock
 def set_time():
     print()
     print("Time set at 10:30:20 \nHold 'escape' to return to menu")
@@ -83,6 +87,7 @@ def set_time():
             print()
             break
     
+# Function Custom Clock 12h format
 def set_time12h():
     print()
     print("Time set at 10:30:\nHold 'escape' to return to menu")
@@ -96,6 +101,7 @@ def set_time12h():
             print()
             break
 
+# Function Alarm Set Entry
 def ask_alarm():
     global alarm_hours, alarm_minutes, alarm_seconds
     alarm_hours = int(input("Set an alarm...\nEnter a hour (00-23) : "))
@@ -120,6 +126,7 @@ def alarm_localtime():
             print()
             break
             
+# Function Alarm Set Local Time 12h format
 def alarm_localtime12h():
     print()
     global hours, minutes, seconds, meridiem, alarm_hours, alarm_minutes, alarm_seconds
@@ -164,7 +171,8 @@ def alarm_customtime():
         if keyboard.is_pressed('esc'):
             print()
             break
-            
+
+# Function Alarm Set Custom Clock  
 def alarm_customtime12h():
     print()
     global hours, minutes, seconds, alarm_seconds, alarm_hours, alarm_minutes, meridiem
@@ -226,7 +234,8 @@ def main():
         else:
             print()
             print("Error, retry...")
-            
+
+# Menu 12h format      
 def main_12h():
     while True:
         print("\n---- MENU ----")
