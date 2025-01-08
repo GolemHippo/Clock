@@ -1,7 +1,7 @@
 # Importing the library
 import time
         
-# Function Show LocalTime
+# Function Show Local Time (fixed)
 def localtime():
     print()
     print("Local Time")
@@ -23,7 +23,7 @@ def localtime():
         if hours == 24:
             hours = 0
         
-# Function DisplayClock
+# Function Show Custom Clock (fixed)
 def afficher_heure():
     print()
     print("Time set at 10:30:20")
@@ -73,7 +73,7 @@ def alarm_localtime():
             print("\nDING DING !!!")
             break
 
-# Function Alarm Set Display Time
+# Function Alarm Set Custom Clock
 def alarm_customtime():
     print()
     global hours, minutes, seconds
@@ -102,7 +102,7 @@ def alarm_customtime():
             break
 
 
-# MAIN
+# Menu
 def main():
     while True:
         print("\n---- MENU ----")
