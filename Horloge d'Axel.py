@@ -1,124 +1,102 @@
-# Importing the library
 import time
 import keyboard
 
-# Function Clock Running
-def running():
-    global hours, minutes, seconds
-    timeis = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
-    print(f"\r{timeis}", end="")
-    time.sleep(1)
-    seconds += 1
-    if seconds == 60:
-        seconds = 0
-        minutes += 1
-    if minutes == 60:
-        minutes = 0
-        hours += 1
-    if hours == 24:
-        hours = 0
-        
-# Function Show LocalTime
+# Function pause prank
+##############################################
+def pause():
+    time.sleep(5)
+
+# Function get local time
+##############################################
+def get_localtime():
+    local_time = time.localtime()
+    hours = local_time.tm_hour
+    minutes = local_time.tm_min
+    seconds = local_time.tm_sec
+    return hours, minutes, seconds
+
+# Function show clock
+##############################################
+def running(hours, minutes, seconds):
+    while True:
+        time_display = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
+        print(f"\r{time_display}", end="")
+        time.sleep(1)
+        seconds += 1
+
+        if seconds == 60:
+            seconds = 0
+            minutes += 1
+        if minutes == 60:
+            minutes = 0
+            hours += 1
+        if hours == 24:
+            hours = 0
+
+        if (hours + minutes + seconds) % 13 == 0:
+            pause()
+
+        if keyboard.is_pressed('esc'):
+            break
+
+# Function show Local Time
+##############################################
 def localtime():
-    print()
-    print("Local Time\nKeep press escape to stop")
-    global hours, minutes, seconds
-    hours = 2
-    minutes = 20
-    seconds = 00
-    while True:
-        running()
-        if keyboard.is_pressed('esc'):
-            print()
-            break
+    print("\n--- Local Time ---\nHold 'ESC' to return to the menu")
+    hours, minutes, seconds = get_localtime()
+    running(hours, minutes, seconds)
 
-        
-# Function DisplayClock
+# Function show Custom Time
+##############################################
 def afficher_heure():
-    print()
-    print("Time set at 10:30:20\nKeep press escape to stop")
-    global hours, minutes, seconds
-    hours = 10
-    minutes = 30
-    seconds = 20
-    while True:
-        running()
-        if keyboard.is_pressed('esc'):
-            print()
-            break
+    print("\n--- Custom Time ---\nHold 'ESC' to return to the menu")
+    try:
+        hours = int(input("Enter a hour (0-23) : "))
+        minutes = int(input("Enter a minute (0-59) : "))
+        seconds = int(input("Enter a second (0-59) : "))
+        if not (0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60):
+            raise ValueError("Invalid choice, please retry")
+        running(hours, minutes, seconds)
+    except ValueError:
+        print(f"Invalid entry, please use a number")
 
-# Function Alarm Set Local Time
+# Function Alarm
+##############################################
 def alarm_localtime():
-    print()
-    global hours, minutes, seconds
-    alarm_hours = int(input("Set an alarm...\nEnter a hour (00-23) : "))
-    alarm_minutes = int(input("Enter a minute (00-59) : "))
-    alarm_seconds = int(input("Enter a second (00-59) : "))
-    print()
-    print(f"Alarm set at {str(alarm_hours).zfill(2)}:{str(alarm_minutes).zfill(2)}:{str(alarm_seconds).zfill(2)}")
-    print("Keep press escape to stop")
-    hours, minutes, seconds = 2, 20, 0 
-    while True:
-        running()
-        if hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds:
-            print()
-            print("\nDING DING !!!")
-            print()
-        if keyboard.is_pressed('esc'):
-            print()
-            break
+    print("NON")
 
-# Function Alarm Set Display Time
-def alarm_customtime():
-    print()
-    global hours, minutes, seconds
-    alarm_hours = int(input("Set an alarm...\nEnter a hour (00-23) : "))
-    alarm_minutes = int(input("Enter a minute (00-59) : "))
-    alarm_seconds = int(input("Enter a second (00-59) : "))
-    print()
-    print(f"Alarm set at {str(alarm_hours).zfill(2)}:{str(alarm_minutes).zfill(2)}:{str(alarm_seconds).zfill(2)}")
-    print("Keep press escape to stop")
-    hours, minutes, seconds = 10, 30, 20
-    while True:
-        running()
-        if hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds:
-            print()
-            print("\nDING DING !!!")
-            print()
-        if keyboard.is_pressed('esc'):
-            print()
-            break
+def alarm_custom():
+    print("NON")
 
-
-# MAIN
+# Menu
+##############################################
 def main():
     while True:
         print("\n---- MENU ----")
-        print("1. Show Local Time")
-        print("2. Set Custom Time")
-        print("3. Set Alarm on Local Time")
-        print("4. Set Alarm on Custom Time")
+        print("1. Local Time")
+        print("2. Custom time")
+        print("3. Set an alarm on local time")
+        print("4. Set an alarm on custom time")
         print("5. Leave")
-        choice = int(input("Your choice : "))
-        
-        if choice == 1:
-            localtime()
-        elif choice == 2:
-            afficher_heure()
-        elif choice == 3:
-            alarm_localtime()
-        elif choice == 4:
-            alarm_customtime()
-        elif choice == 5:
-            print()
-            print("GoodBye !")
-            print()
-            break
-        else:
-            print()
-            print("Error, retry...")
-
+        try:
+            choice = int(input("Your choice : "))
+            if choice == 1:
+                localtime()
+            elif choice == 2:
+                afficher_heure()
+            elif choice == 3:
+                alarm_localtime()
+            elif choice == 4:
+                alarm_custom()
+            elif choice == 5:
+                print("\nAu revoir !")
+                break
+            else:
+                print("Invalid choice, please retry")
+        except ValueError:
+            print("Invalid entry, please use a number")
 
 # Program execute
+##############################################
 if __name__ == "__main__":
     main()
