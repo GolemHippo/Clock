@@ -37,6 +37,7 @@ def running(hours, minutes, seconds):
             pause()
 
         if keyboard.is_pressed('esc'):
+            print("\n\n")
             break
 
 # Function show Local Time
@@ -55,18 +56,76 @@ def afficher_heure():
         minutes = int(input("Enter a minute (0-59) : "))
         seconds = int(input("Enter a second (0-59) : "))
         if not (0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60):
-            raise ValueError("Invalid choice, please retry")
+            raise ValueError("\nInvalid choice, please retry")
         running(hours, minutes, seconds)
     except ValueError:
-        print(f"Invalid entry, please use a number")
+        print("\nInvalid entry, please use a number")
 
-# Function Alarm
+# Function running clock with alarm
+##############################################
+def running_alarm(hours, minutes, seconds, alarm_h, alarm_min, alarm_sec):
+    while True:
+        time_display = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
+        print(f"\r{time_display}", end="")
+        time.sleep(1)
+        seconds += 1
+        if seconds == 60:
+            seconds = 0
+            minutes += 1
+        if minutes == 60:
+            minutes = 0
+            hours += 1
+        if hours == 24:
+            hours = 0
+        if hours == alarm_h and minutes == alarm_min and seconds == alarm_sec:
+            print()
+            print("\nDING DING !!!")
+            print()
+
+        if (hours + minutes + seconds) % 13 == 0:
+            pause()
+
+        if keyboard.is_pressed('esc'):
+            print("\n\n")
+            break
+
+# Function Ask Alarm
+##############################################
+def ask_alarm():
+    while True:
+        try:
+            alarm_h = int(input("Set the alarm...\nEnter a hour (0-23): "))
+            alarm_min = int(input("Enter a minute (0-59): "))
+            alarm_sec = int(input("Enter a second (0-59): "))
+            if not (0 <= alarm_h < 24 and 0 <= alarm_min < 60 and 0 <= alarm_sec < 60):
+                raise ValueError("\nInvalid time. Please try again.")
+            return alarm_h, alarm_min, alarm_sec
+        except ValueError:
+            print("\nInvalid entry, please use numbers")
+
+# Function show Local Time with alarm
 ##############################################
 def alarm_localtime():
-    print("NON")
+    print("\n--- Alarm on Local Time ---\nHold 'ESC' to return to the menu")
+    alarm_h, alarm_min, alarm_sec = ask_alarm()
+    hours, minutes, seconds = get_localtime()
+    running_alarm(hours, minutes, seconds, alarm_h, alarm_min, alarm_sec)
 
+# Function show Custom Time with alarm
+##############################################
 def alarm_custom():
-    print("NON")
+    print("\n--- Alarm on Custom Time ---\nHold 'ESC' to return to the menu")
+    try:
+        hours = int(input("Enter a hour (0-23): "))
+        minutes = int(input("Enter a minute (0-59): "))
+        seconds = int(input("Enter a second (0-59): "))
+        if not (0 <= hours < 24 and 0 <= minutes < 60 and 0 <= seconds < 60):
+            raise ValueError("\nInvalid custom time. Please try again.")
+        alarm_h, alarm_min, alarm_sec = ask_alarm()
+        running_alarm(hours, minutes, seconds, alarm_h, alarm_min, alarm_sec)
+    except ValueError:
+        print("\nInvalid entry, please use numbers")
+
 
 # Menu
 ##############################################
@@ -92,9 +151,9 @@ def main():
                 print("\nAu revoir !")
                 break
             else:
-                print("Invalid choice, please retry")
+                print("\nInvalid choice, please retry")
         except ValueError:
-            print("Invalid entry, please use a number")
+            print("\nInvalid entry, please use a number")
 
 # Program execute
 ##############################################
