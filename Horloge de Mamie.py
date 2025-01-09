@@ -1,277 +1,42 @@
-# Importing the library
 import time
-import keyboard
+from datetime import datetime, timedelta
 
-# Function to get Real Local Time
-def get_localtime():
-    global hours, minutes, seconds
-    hours = int(time.strftime('%H'))
-    minutes = int(time.strftime('%M'))
-    seconds = int(time.strftime('%S'))
-    
-# Function Pause Prank
-def time_prank():
-    if (hours + minutes + seconds)%13 == 0:
-        time.sleep(3) 
+class Horloge:
+    def __init__(self):
+        self.heure_actuelle = datetime.now()
+        self.alarme = None
 
-# Function Clock Running
-def time_running():
-    global seconds, minutes, hours
-    seconds += 1
-    if seconds == 60:
-        seconds = 0
-        minutes += 1
-    if minutes == 60:
-        minutes = 0
-        hours += 1
-    if hours == 24:
-        hours = 0
-    time.sleep(1)
-    time_prank()
-
-# Function Show Real Local Time
-def show_time():
-    global seconds, hours, minutes
-    timeis = f"{str(hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}"
-    print(f"\r{timeis}", end="")
-    time_running()
-
-# Function Show Real Local Time 12h format
-def show_time12h():
-    global hours, minutes, seconds, meridiem
-    if hours == 12:
-        meridiem = 'PM'
-    elif hours > 12:
-        meridiem = 'PM'
-        m_hours = hours - 12
-    else:
-        meridiem = 'AM'
-        m_hours = hours
-    timeis = f"{str(m_hours).zfill(2)}:{str(minutes).zfill(2)}:{str(seconds).zfill(2)}:{str(meridiem)}"
-    print(f"\r{timeis}", end="")
-    time_running()
-
-# Function Local Time
-def localtime():
-    print()
-    print("Local Time Hold 'escape' to return to menu")
-    get_localtime()
-    while True:
-        show_time()
-        if keyboard.is_pressed('esc'):
-            print()
-            break
-
-# Function Local Time 12h format
-def localtime12h():
-    print()
-    print("Local Time \nHold 'escape' to return to menu")
-    get_localtime()
-    while True:
-        show_time12h()
-        if keyboard.is_pressed('esc'):
-            print()
-            break
-        
-# Function Custom Clock
-def set_time():
-    print()
-    print("Time set at 10:30:20 \nHold 'escape' to return to menu")
-    global hours, minutes, seconds
-    hours = 10
-    minutes = 30
-    seconds = 20
-    while True:
-        show_time()
-        if keyboard.is_pressed('esc'):
-            print()
-            break
-    
-# Function Custom Clock 12h format
-def set_time12h():
-    print()
-    print("Time set at 10:30:\nHold 'escape' to return to menu")
-    global hours, minutes, seconds
-    hours = 10
-    minutes = 30
-    seconds = 20
-    while True:
-        show_time12h()
-        if keyboard.is_pressed('esc'):
-            print()
-            break
-
-# Function Alarm Set Entry
-def ask_alarm():
-    global alarm_hours, alarm_minutes, alarm_seconds
-    alarm_hours = int(input("Set an alarm...\nEnter a hour (00-23) : "))
-    alarm_minutes = int(input("Enter a minute (00-59) : "))
-    alarm_seconds = int(input("Enter a second (00-59) : "))
-    print()
-
-
-# Function Alarm Set Local Time
-def alarm_localtime():
-    global alarm_hours, alarm_minutes, alarm_seconds, seconds, hours, minutes
-    print()
-    ask_alarm()
-    print(f"Alarm set at {str(alarm_hours).zfill(2)}:{str(alarm_minutes).zfill(2)}:{str(alarm_seconds).zfill(2)}\nHold 'escape' to return to menu")
-    get_localtime()
-    while True:
-        show_time()
-        if hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds:
-            print("\nDING DING !!!")
-            break
-        if keyboard.is_pressed('esc'):
-            print()
-            break
-            
-# Function Alarm Set Local Time 12h format
-def alarm_localtime12h():
-    print()
-    global hours, minutes, seconds, meridiem, alarm_hours, alarm_minutes, alarm_seconds
-    ask_alarm()
-    if alarm_hours > 12:
-        alarm_meridiem = 'PM'
-        alarm_hours -= 12
-    else:
-        alarm_meridiem = 'AM'
-    print(f"Alarm set at {str(alarm_hours).zfill(2)}:{str(alarm_minutes).zfill(2)}:{str(alarm_seconds).zfill(2)}:{str(alarm_meridiem)}\nHold 'escape' to return to menu")
-    while True:
-        get_localtime()
-        if hours > 12:
-            meridiem = 'PM'
-            m_hours = hours - 12
+    def afficher_heure(self, heure_tuple=None):
+        if heure_tuple:
+            self.heure_actuelle = datetime.now().replace(hour=heure_tuple[0], minute=heure_tuple[1], second=heure_tuple[2])
         else:
-            meridiem = 'AM'
-            m_hours = hours    
-        if m_hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds and meridiem == alarm_meridiem:
-            show_time12h()
-            print("\nDING DING !!!")
-            break
-        else:
-            show_time12h()
-        if keyboard.is_pressed('esc'):
-            print()
-            break
-            
-# Function Alarm Set Custom Clock
-def alarm_customtime():
-    print()
-    global hours, minutes, seconds
-    ask_alarm()
-    print(f"Alarm set at {str(alarm_hours).zfill(2)}:{str(alarm_minutes).zfill(2)}:{str(alarm_seconds).zfill(2)}\nHold 'escape' to return to menu")
-    hours, minutes, seconds = 10, 30, 20
-    while True:
-        show_time()
-        if hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds:
-            
-            print("\nDING DING !!!")
-            break
-        if keyboard.is_pressed('esc'):
-            print()
-            break
-
-# Function Alarm Set Custom Clock  
-def alarm_customtime12h():
-    print()
-    global hours, minutes, seconds, alarm_seconds, alarm_hours, alarm_minutes, meridiem
-    ask_alarm()
-    if alarm_hours > 12:
-        alarm_meridiem = 'PM'
-        alarm_hours -= 12
-    else:
-        alarm_meridiem = 'AM'
-    print(f"Alarm set at {str(alarm_hours).zfill(2)}:{str(alarm_minutes).zfill(2)}:{str(alarm_seconds).zfill(2)}:{str(alarm_meridiem)}\nHold 'escape' to return to menu")
-    hours, minutes, seconds = 10, 30, 20
-    if hours > 12:
-        meridiem = 'PM'
-        m_hours = hours - 12
-    else:
-        meridiem = 'AM'
-        m_hours = hours
-    while True:
-        show_time12h()
-        if m_hours == alarm_hours and minutes == alarm_minutes and seconds == alarm_seconds and meridiem == alarm_meridiem:
-            print("\nDING DING !!!")
-            break
-        if keyboard.is_pressed('esc'):
-            print()
-            break
-
-# Menu
-def main():
-    while True:
-        print("\n---- MENU ----")
-        print("1. Show Local Time")
-        print("2. Set Custom Time")
-        print("3. Set Alarm on Local Time")
-        print("4. Set Alarm on Custom Time")
-        print('5. Display time on 12h Format')
-        print("6. Leave")
-        choice = int(input("Your choice : "))
+            self.heure_actuelle += timedelta(seconds=1)
         
-        if choice == 1:
-            localtime()
-            
-        elif choice == 2:
-            set_time()
-            
-        elif choice == 3:
-            alarm_localtime()
-            
-        elif choice == 4:
-            alarm_customtime()
-        
-        elif choice == 5:
-            main_12h()
-            
-        elif choice == 6:
-            print()
-            print("GoodBye !")
-            print()
-            exit()
-        else:
-            print()
-            print("Error, retry...")
+        print(self.heure_actuelle.strftime("%H:%M:%S"), end="\r")
 
-# Menu 12h format      
-def main_12h():
-    while True:
-        print("\n---- MENU ----")
-        print("1. Show Local Time")
-        print("2. Set Custom Time")
-        print("3. Set Alarm on Local Time")
-        print("4. Set Alarm on Custom Time")
-        print('5. Display time on 24h Format')
-        print("6. Leave")
-        choice = int(input("Your choice : "))
-        
-        if choice == 1:
-            localtime12h()
-            
-        elif choice == 2:
-            set_time12h()
-            
-        elif choice == 3:
-            alarm_localtime12h()
-            
-        elif choice == 4:
-            alarm_customtime12h()
-        
-        elif choice == 5:
-            main()
-            
-        elif choice == 6:
-            print()
-            print("GoodBye !")
-            print()
-            exit()
-        else:
-            print()
-            print("Error, retry...")
+    def regler_alarme(self, alarme_tuple):
+        self.alarme = datetime.now().replace(hour=alarme_tuple[0], minute=alarme_tuple[1], second=alarme_tuple[2])
+        print(f"Alarme réglée pour {self.alarme.strftime('%H:%M:%S')}")
 
+    def verifier_alarme(self):
+        if self.alarme and self.heure_actuelle.strftime("%H:%M:%S") == self.alarme.strftime("%H:%M:%S"):
+            print("\nDRING DRING ! C'est l'heure du réveil !")
+            self.alarme = None
 
-# Program execute
-if __name__ == "__main__":
-    main()
+    def run(self):
+        while True:
+            self.afficher_heure()
+            self.verifier_alarme()
+            time.sleep(1)
+
+# Utilisation de la classe
+horloge = Horloge()
+
+# Régler l'heure (optionnel)
+horloge.afficher_heure((16, 30, 0))
+
+# Régler l'alarme (optionnel)
+horloge.regler_alarme((16, 30, 10))
+
+# Lancer l'horloge
+horloge.run()
