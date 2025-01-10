@@ -73,7 +73,7 @@ def set_alarm():
                 s = int(0)
                 alarm = (h, m, s)
                 return alarm
-        if setalarm == 'n':
+        elif setalarm == 'n':
             print("You chose to don't set an alarm")
             alarm = (None, None, None)
             return alarm
@@ -120,7 +120,7 @@ def running(format, t_origin, alarm):
         if (hours + minutes + seconds) % 31 == 0:
             time.sleep(5)
 
-        if alarm_h==hours and alarm_min == minutes and alarm_sec== seconds:
+        elif alarm_h==hours and alarm_min == minutes and alarm_sec== seconds:
             print("\n\n DING DING !!!\n")
 
         elif keyboard.is_pressed('esc'):
@@ -135,8 +135,4 @@ def menu():
 
 # Program execute
 if __name__ == "__main__":
-<<<<<<< HEAD
     menu()
-=======
-    menu()
->>>>>>> d2245ccf8dc0009b0792d122be62b08ce93eede3
