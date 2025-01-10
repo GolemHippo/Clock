@@ -114,12 +114,14 @@ def running(format, t_origin, alarm):
             hours += 1
         elif hours == 24:
             hours = 0
+        
+        t_origin = (hours, minutes, seconds)
     
-        elif (hours + minutes + seconds) % 31 == 0:
-            time.sleep(3)
+        if (hours + minutes + seconds) % 31 == 0:
+            time.sleep(5)
 
         if alarm_h==hours and alarm_min == minutes and alarm_sec== seconds:
-            print("\n DING DING !!!\n")
+            print("\n\n DING DING !!!\n")
 
         elif keyboard.is_pressed('esc'):
             print("\n\n")
