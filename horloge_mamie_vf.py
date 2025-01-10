@@ -135,4 +135,8 @@ def menu():
 
 # Program execute
 if __name__ == "__main__":
+<<<<<<< HEAD
     menu()
+=======
+    menu()
+>>>>>>> d2245ccf8dc0009b0792d122be62b08ce93eede3
