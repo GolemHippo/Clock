@@ -73,6 +73,7 @@ def set_alarm():
 def running(format, t_origin, alarm):
     hours, minutes, seconds = t_origin
     alarm_h, alarm_min, alarm_sec = alarm
+    print("Hold 'ESC' to return to the menu")
     while True:
         if format == 12:
             if hours > 12:
@@ -110,6 +111,6 @@ def running(format, t_origin, alarm):
             print("\n\n")
             break
 def menu():
-    running(choose_a_format(),origin(),set_alarm())
-
-running(choose_a_format(),origin(),set_alarm())
+    while True:
+        running(choose_a_format(),origin(),set_alarm())
+menu()
