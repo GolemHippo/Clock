@@ -24,37 +24,37 @@ def running(hours, minutes, seconds, format):
             if hours > 12:
                 meridiem = 'PM'
                 n_hours = hours - 12
-            elif hours < 12:
+            if hours < 12:
                 meridiem = 'AM'
-            elif hours == 12:
+            if hours == 12:
                 meridiem = 'PM'
             time_display = f"{(n_hours):02}:{(minutes):02}:{(seconds):02} {meridiem}"
             print(f"\r{time_display}", end="")
-        elif format == 'b':
+        if format == 'b':
             time_display = f"{(hours):02}:{(minutes):02}:{(seconds):02}"
             print(f"\r{time_display}", end="")
         time.sleep(1)
         seconds += 1
 
-        elif seconds == 60:
+        if seconds == 60:
             seconds = 0
             minutes += 1
-        elif minutes == 60:
+        if minutes == 60:
             minutes = 0
             hours += 1
-        elif hours == 24:
+        if hours == 24:
             hours = 0
 
-        elif (hours + minutes + seconds) % 31 == 0:
+        if (hours + minutes + seconds) % 31 == 0:
             pause()
 
-        elif keyboard.is_pressed('esc'):
+        if keyboard.is_pressed('esc'):
             print("\n\n")
             break
 
 # Function show Local Time
 ##############################################
-def localtime(format):
+def show_localtime(format):
     print("\n--- Local Time ---\nHold 'ESC' to return to the menu")
     hours, minutes, seconds = get_localtime()
     running(hours, minutes, seconds, format)
@@ -84,35 +84,35 @@ def running_alarm(hours, minutes, seconds, alarm_h, alarm_min, alarm_sec, format
             if hours > 12:
                 meridiem = 'PM'
                 n_hours = hours - 12
-            elif hours < 12:
+            if hours < 12:
                 meridiem = 'AM'
-            elif hours == 12:
+            if hours == 12:
                 meridiem = 'PM'
             time_display = f"{(n_hours):02}:{(minutes):02}:{(seconds):02} {meridiem}"
             print(f"\r{time_display}", end="")
-        elif format == 'b':
+        if format == 'b':
             time_display = f"{(hours):02}:{(minutes):02}:{(seconds):02}"
             print(f"\r{time_display}", end="")
         time.sleep(1)
         seconds += 1
-        elif seconds == 60:
+        if seconds == 60:
             seconds = 0
             minutes += 1
-        elif minutes == 60:
+        if minutes == 60:
             minutes = 0
             hours += 1
-        elif hours == 24:
+        if hours == 24:
             hours = 0
         
-        elif hours == alarm_h and minutes == alarm_min and seconds == alarm_sec:
+        if hours == alarm_h and minutes == alarm_min and seconds == alarm_sec:
             print()
             print("\nDING DING !!!")
             print()
 
-        elif (hours + minutes + seconds) % 13 == 0:
+        if (hours + minutes + seconds) % 13 == 0:
             pause()
 
-        elif keyboard.is_pressed('esc'):
+        if keyboard.is_pressed('esc'):
             print("\n\n")
             break
 
@@ -132,7 +132,7 @@ def ask_alarm():
                 return alarm_h, alarm_min, alarm_sec
             except ValueError:
                 print("\nInvalid entry, please use numbers")
-        elif format == 'a':
+        if format == 'a':
             try:
                 alarm_meridiem = input("\nEnter the meridiem (AM/PM) : ")
                 n_alarm_h = int(input("\nSet the alarm...\nEnter a hour (0-12): "))
@@ -140,9 +140,9 @@ def ask_alarm():
                 alarm_sec = int(input("Enter a second (0-59): "))
                 if not (0 <= n_alarm_h < 13 and 0 <= alarm_min < 60 and 0 <= alarm_sec < 60):
                     raise ValueError("\nInvalid time. Please try again.")
-                elif not (alarm_meridiem == 'AM' or alarm_meridiem == 'PM'):
+                if not (alarm_meridiem == 'AM' or alarm_meridiem == 'PM'):
                     raise ValueError("\nInvalid meridiem. Please try again... 'AM'/'PM'")
-                elif alarm_meridiem == 'PM':
+                if alarm_meridiem == 'PM':
                     alarm_h = n_alarm_h + 12
                 else:
                     alarm_h = n_alarm_h
@@ -154,7 +154,7 @@ def ask_alarm():
 
 # Function show Local Time with alarm
 ##############################################
-def alarm_localtime(format):
+def show_alarm_localtime(format):
     print("\n--- Alarm on Local Time ---\nHold 'ESC' to return to the menu")
     alarm_h, alarm_min, alarm_sec = ask_alarm()
     hours, minutes, seconds = get_localtime()
@@ -163,7 +163,7 @@ def alarm_localtime(format):
 
 # Function show Custom Time with alarm
 ##############################################
-def alarm_custom(format):
+def show_alarm_custom(format):
     print("\n--- Alarm on Custom Time ---\nHold 'ESC' to return to the menu")
     try:
         hours = int(input("\nSet clock\nEnter a hour (0-23): "))
@@ -191,13 +191,13 @@ def main(format):
         try:
             choice = int(input("Your choice : "))
             if choice == 1:
-                localtime(format)
+                show_localtime(format)
             elif choice == 2:
                 afficher_heure(format)
             elif choice == 3:
-                alarm_localtime(format)
+                show_alarm_localtime(format)
             elif choice == 4:
-                alarm_custom(format)
+                show_alarm_custom(format)
             elif choice == 5:
                 menu()    
             elif choice == 6:
@@ -210,14 +210,14 @@ def main(format):
 
 # Format ask
 ##############################################
-def format_ask():
+def ask_format():
     while True:
         format = input("\nDo you want to use 12h 'a' or 24h 'b' format ? : ")
         if format == 'a' or format == 'b':
             if format == 'a':
                 print("You are using 12h format")
                 return format
-            elif format == 'b':
+            if format == 'b':
                 print("You are using 24h format")
                 return format
         else:
@@ -227,7 +227,7 @@ def format_ask():
 ##############################################
 def menu():
     while True:
-        format = format_ask()
+        format = ask_format()
         main(format)
 
 
