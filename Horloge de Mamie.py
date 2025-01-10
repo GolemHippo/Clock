@@ -54,7 +54,7 @@ def running(hours, minutes, seconds, format):
 
 # Function show Local Time
 ##############################################
-def localtime(format):
+def show_localtime(format):
     print("\n--- Local Time ---\nHold 'ESC' to return to the menu")
     hours, minutes, seconds = get_localtime()
     running(hours, minutes, seconds, format)
@@ -154,7 +154,7 @@ def ask_alarm():
 
 # Function show Local Time with alarm
 ##############################################
-def alarm_localtime(format):
+def show_alarm_localtime(format):
     print("\n--- Alarm on Local Time ---\nHold 'ESC' to return to the menu")
     alarm_h, alarm_min, alarm_sec = ask_alarm()
     hours, minutes, seconds = get_localtime()
@@ -163,7 +163,7 @@ def alarm_localtime(format):
 
 # Function show Custom Time with alarm
 ##############################################
-def alarm_custom(format):
+def show_alarm_custom(format):
     print("\n--- Alarm on Custom Time ---\nHold 'ESC' to return to the menu")
     try:
         hours = int(input("\nSet clock\nEnter a hour (0-23): "))
@@ -191,13 +191,13 @@ def main(format):
         try:
             choice = int(input("Your choice : "))
             if choice == 1:
-                localtime(format)
+                show_localtime(format)
             elif choice == 2:
                 afficher_heure(format)
             elif choice == 3:
-                alarm_localtime(format)
+                show_alarm_localtime(format)
             elif choice == 4:
-                alarm_custom(format)
+                show_alarm_custom(format)
             elif choice == 5:
                 menu()    
             elif choice == 6:
@@ -210,7 +210,7 @@ def main(format):
 
 # Format ask
 ##############################################
-def format_ask():
+def ask_format():
     while True:
         format = input("\nDo you want to use 12h 'a' or 24h 'b' format ? : ")
         if format == 'a' or format == 'b':
@@ -227,7 +227,7 @@ def format_ask():
 ##############################################
 def menu():
     while True:
-        format = format_ask()
+        format = ask_format()
         main(format)
 
 
