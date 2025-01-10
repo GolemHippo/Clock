@@ -24,31 +24,31 @@ def running(hours, minutes, seconds, format):
             if hours > 12:
                 meridiem = 'PM'
                 n_hours = hours - 12
-            if hours < 12:
+            elif hours < 12:
                 meridiem = 'AM'
-            if hours == 12:
+            elif hours == 12:
                 meridiem = 'PM'
             time_display = f"{(n_hours):02}:{(minutes):02}:{(seconds):02} {meridiem}"
             print(f"\r{time_display}", end="")
-        if format == 'b':
+        elif format == 'b':
             time_display = f"{(hours):02}:{(minutes):02}:{(seconds):02}"
             print(f"\r{time_display}", end="")
         time.sleep(1)
         seconds += 1
 
-        if seconds == 60:
+        elif seconds == 60:
             seconds = 0
             minutes += 1
-        if minutes == 60:
+        elif minutes == 60:
             minutes = 0
             hours += 1
-        if hours == 24:
+        elif hours == 24:
             hours = 0
 
-        if (hours + minutes + seconds) % 31 == 0:
+        elif (hours + minutes + seconds) % 31 == 0:
             pause()
 
-        if keyboard.is_pressed('esc'):
+        elif keyboard.is_pressed('esc'):
             print("\n\n")
             break
 
@@ -84,35 +84,35 @@ def running_alarm(hours, minutes, seconds, alarm_h, alarm_min, alarm_sec, format
             if hours > 12:
                 meridiem = 'PM'
                 n_hours = hours - 12
-            if hours < 12:
+            elif hours < 12:
                 meridiem = 'AM'
-            if hours == 12:
+            elif hours == 12:
                 meridiem = 'PM'
             time_display = f"{(n_hours):02}:{(minutes):02}:{(seconds):02} {meridiem}"
             print(f"\r{time_display}", end="")
-        if format == 'b':
+        elif format == 'b':
             time_display = f"{(hours):02}:{(minutes):02}:{(seconds):02}"
             print(f"\r{time_display}", end="")
         time.sleep(1)
         seconds += 1
-        if seconds == 60:
+        elif seconds == 60:
             seconds = 0
             minutes += 1
-        if minutes == 60:
+        elif minutes == 60:
             minutes = 0
             hours += 1
-        if hours == 24:
+        elif hours == 24:
             hours = 0
         
-        if hours == alarm_h and minutes == alarm_min and seconds == alarm_sec:
+        elif hours == alarm_h and minutes == alarm_min and seconds == alarm_sec:
             print()
             print("\nDING DING !!!")
             print()
 
-        if (hours + minutes + seconds) % 13 == 0:
+        elif (hours + minutes + seconds) % 13 == 0:
             pause()
 
-        if keyboard.is_pressed('esc'):
+        elif keyboard.is_pressed('esc'):
             print("\n\n")
             break
 
@@ -132,7 +132,7 @@ def ask_alarm():
                 return alarm_h, alarm_min, alarm_sec
             except ValueError:
                 print("\nInvalid entry, please use numbers")
-        if format == 'a':
+        elif format == 'a':
             try:
                 alarm_meridiem = input("\nEnter the meridiem (AM/PM) : ")
                 n_alarm_h = int(input("\nSet the alarm...\nEnter a hour (0-12): "))
@@ -140,9 +140,9 @@ def ask_alarm():
                 alarm_sec = int(input("Enter a second (0-59): "))
                 if not (0 <= n_alarm_h < 13 and 0 <= alarm_min < 60 and 0 <= alarm_sec < 60):
                     raise ValueError("\nInvalid time. Please try again.")
-                if not (alarm_meridiem == 'AM' or alarm_meridiem == 'PM'):
+                elif not (alarm_meridiem == 'AM' or alarm_meridiem == 'PM'):
                     raise ValueError("\nInvalid meridiem. Please try again... 'AM'/'PM'")
-                if alarm_meridiem == 'PM':
+                elif alarm_meridiem == 'PM':
                     alarm_h = n_alarm_h + 12
                 else:
                     alarm_h = n_alarm_h
@@ -217,7 +217,7 @@ def format_ask():
             if format == 'a':
                 print("You are using 12h format")
                 return format
-            if format == 'b':
+            elif format == 'b':
                 print("You are using 24h format")
                 return format
         else:
